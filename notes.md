@@ -242,4 +242,13 @@ Al aplicar filtros estadísticos sobre esta nueva proporción, logré identifica
 
 ## Entregable del Proyecto 1
 
-Estos hallazgos confirman mi hipótesis: los outliers más interesantes no son simplemente los planetas más densos, sino aquellos cuyas mediciones multivariables no tienen sentido astrofísico. Los casos más extremos fueron exportados al archivo `planetas_anomalos.csv` para investigar sus causas físicas y servir como base de entrenamiento para futuros modelos de Inteligencia Artificial.
+Estos hallazgos confirman mi hipótesis: los outliers más interesantes no son simplemente los planetas más densos, sino aquellos cuyas mediciones multivariables no tienen sentido astrofísico.
+
+Al investigar los casos absurdos generados por el filtro de 10x (como **Kepler-80 f** y **Kepler-49 d**), la revisión de la literatura astrofísica demuestra que estos planetas no poseen una anomalía física real, sino un error de medición arrastrado en el catálogo.
+
+- **El caso de Kepler-80 f:**: Aunque el sistema Kepler-80 posee una cadena resonante de varios cuerpos (que permite calcular masas a través de Variaciones de Tiempo de Tránsito o TTVs), el planeta *f* está dinámicamente desacoplado de dicha resonancia (MacDonald et al., 2016). Al no interactuar gravitacionalmente de la misma forma, su masa no puede medirse de forma fiable por TTV, y estudios recientes solo le asignan estimaciones teóricas o "límites superiores" de masa.
+
+**Conclusión final:**
+Como dije anteriormente, estos hallazgos confirman mi hipótesis final. Sin embargo, la lección más importante es metodológica: los algoritmos y filtros matemáticos son altamente eficientes para aislar anomalías en bases de datos masivas, pero la validación astrofísica en la literatura es indispensable. Un outlier extremo en un catálogo astronómico es más probable que sea un artefacto de medición, un modelo N-body inestable o un dato sin confirmar, antes que un cuerpo que rompa las leyes de la física.
+
+Los casos más extremos fueron exportados al archivo `planetas_anomalos.csv` para investigar sus causas físicas y servir como base de entrenamiento para futuros modelos de Inteligencia Artificial.

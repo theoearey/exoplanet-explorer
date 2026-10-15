@@ -189,6 +189,7 @@ print(df_filtered_10x_sorted[["pl_name", "pl_rade", "pl_bmasse", "pl_dens", "den
 df_filtered_10x_sorted.to_csv("planetas_anomalos.csv", index=False)
 
 # Mensaje final en consola
-print("\n=== CONCLUSIÓN DEL PROYECTO ===")
-print("Estos hallazgos confirman la hipótesis: los outliers más interesantes no son simplemente los planetas más densos, sino aquellos cuyas mediciones multivariables no tienen sentido astrofísico.")
-print("Los casos más extremos fueron exportados a 'planetas_anomalos.csv' para investigar sus causas físicas y servir como base de entrenamiento para futuros modelos de IA.")
+print("\n=== CONCLUSIÓN DEL PROYECTO 1 ===")
+print("Los hallazgos confirman la hipótesis: los outliers más extremos no son exoplanetas súper densos,")
+print("sino anomalías de catálogo donde las mediciones multivariables no tienen sentido astrofísico.")
+print("Los casos identificados fueron exportados a 'planetas_anomalos.csv'.")
