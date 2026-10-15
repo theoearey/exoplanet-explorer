@@ -15,7 +15,7 @@ print(df.shape)
 print(df.isna().sum())
 
 # Elimino los planetas que no tienen radio, masa o densidad
-df_complete = df.dropna(subset=["pl_rade", "pl_bmasse", "pl_dens"])
+df_complete = df.dropna(subset=["pl_rade", "pl_bmasse", "pl_dens"]).copy()
 
 # Comparo el dataset original con el limpio
 print("Dataset original:", df.shape)
