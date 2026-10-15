@@ -164,6 +164,31 @@ plt.title("Densidad reportada vs densidad calculada (escala logarítmica)")
 plt.savefig("figures/densidad_reportada_vs_calculada_log.png")
 plt.show()
 
+#Guardar la proporción como una nueva columna en el dataset
+df_complete["dens_radio"] = dens_radio
 
+#Filtrar los planetas donde la densidad reportada es absurdamente mayor que la densidad calculada (dens_radio > 3 veces) o absurdamente menor (dens_radio < 0.3 veces) a la densidad que su masa y radio deberían indicar
+df_filtered = df_complete[(df_complete["dens_radio"] > 3) | (df_complete["dens_radio"] < 0.3)]
 
+#Ordenar para ver los casos más extremos
+df_filtered_sorted = df_filtered.sort_values("dens_radio",ascending=False)
 
+print("\n--- ANOMALÍAS (3x o 0.3x) ---")
+print(df_filtered_sorted[["pl_name", "pl_rade", "pl_bmasse", "pl_dens", "dens_radio"]].head(15))
+
+#Filtrar los planetas donde la densidad reportada es absurdamente mayor que la densidad calculada (dens_radio > 10 veces) o absurdamente menor (dens_radio < 0.1 veces) a la densidad que su masa y radio deberían indicar
+df_filtered_10x = df_complete[(df_complete["dens_radio"] > 10) | (df_complete["dens_radio"] < 0.1)]
+
+#Ordenar para ver los casos más extremos em eñ casp de dens_radio > 10 o < 0.1
+df_filtered_10x_sorted = df_filtered_10x.sort_values("dens_radio",ascending=False)
+
+print("\n--- ANOMALÍAS EXTREMAS (10x o 0.1x) ---")
+print(df_filtered_10x_sorted[["pl_name", "pl_rade", "pl_bmasse", "pl_dens", "dens_radio"]].head(15))
+
+# Exportar el resultado físico a un archivo CSV
+df_filtered_10x_sorted.to_csv("planetas_anomalos.csv", index=False)
+
+# Mensaje final en consola
+print("\n=== CONCLUSIÓN DEL PROYECTO ===")
+print("Estos hallazgos confirman la hipótesis: los outliers más interesantes no son simplemente los planetas más densos, sino aquellos cuyas mediciones multivariables no tienen sentido astrofísico.")
+print("Los casos más extremos fueron exportados a 'planetas_anomalos.csv' para investigar sus causas físicas y servir como base de entrenamiento para futuros modelos de IA.")

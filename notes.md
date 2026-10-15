@@ -223,3 +223,23 @@ Un valor extremo podría deberse a:
 Inicialmente pensaba buscar principalmente valores extremos.
 Después de observar los gráficos y las correlaciones, parece más interesante buscar planetas que se alejen del patrón general. Por ejemplo, dos planetas pueden tener densidades relativamente normales individualmente, pero uno de ellos podría tener una densidad muy extraña considerando su masa y su radio.
 Se me ocurre como nuevo objetivo detectar planetas cuyas combinaciones de masa, radio y densidad se alejan significativamente de lo esperado para la población general.
+
+## Comprobación de la hipótesis (Densidad teórica vs Reportada)
+
+Para probar esta nueva hipótesis, decidí calcular la densidad teórica de cada planeta asumiendo una forma esférica y utilizando su masa y radio reportados, tomando como base la densidad media terrestre (5.514 g/cm³):
+
+- Densidad calculada = 5.514 * (Masa / Radio³)
+
+Luego, creé una métrica de discrepancia (`dens_radio`) dividiendo la densidad reportada por la NASA entre mi densidad calculada. Si los datos del catálogo son consistentes físicamente, esta proporción debería orbitar cerca de 1.
+
+## Resultados de anomalías extremas
+
+Al aplicar filtros estadísticos sobre esta nueva proporción, logré identificar exactamente lo que buscaba: combinaciones físicamente inconsistentes.
+
+1. **Umbral 3x y 0.3x:** Aisló una población de planetas que reportan más del triple o menos de un tercio de la densidad que geométricamente deberían tener por su tamaño y masa.
+2. **Umbral 10x y 0.1x (Anomalías Absurdas):** Al llevar el filtro al extremo, logré aislar los casos absolutamente imposibles que revelan errores o características extrañas en el catálogo.
+   - **Caso destacado:** Kepler-80 f. Con un tamaño similar a la Tierra (1.21 radios), el catálogo le asigna una masa brutal de 4459 masas terrestres y una densidad reportada de 703 g/cm³. Su proporción de discrepancia es de apenas 0.05, evidenciando un choque directo entre el volumen y la masa reportada.
+
+## Entregable del Proyecto 1
+
+Estos hallazgos confirman mi hipótesis: los outliers más interesantes no son simplemente los planetas más densos, sino aquellos cuyas mediciones multivariables no tienen sentido astrofísico. Los casos más extremos fueron exportados al archivo `planetas_anomalos.csv` para investigar sus causas físicas y servir como base de entrenamiento para futuros modelos de Inteligencia Artificial.
