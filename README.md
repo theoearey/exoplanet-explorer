@@ -1,6 +1,6 @@
 # 🪐 Exoplanet Explorer
 
-![Status](https://img.shields.io/badge/Estado-En_Desarrollo-yellow)
+![Status](https://img.shields.io/badge/Estado-Finalizado-success)
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
 ![Pandas](https://img.shields.io/badge/Pandas-3.0.6-150458)
 ![Data Source](https://img.shields.io/badge/Datos-NASA_Exoplanet_Archive-red)
@@ -67,7 +67,6 @@ Debido a la naturaleza no lineal de las leyes de escala planetaria y la influenc
 El script `main.py` genera comparativas en escala lineal y logarítmica dentro del directorio `figures/`:
 
 ### Masa vs. Radio
-
 En escala logarítmica emerge la estructura real de las poblaciones planetarias y se observa una alta dispersión de masa para radios entre $10$ y $20\ R_\oplus$.
 
 | Escala Lineal | Escala Logarítmica |
@@ -75,7 +74,6 @@ En escala logarítmica emerge la estructura real de las poblaciones planetarias 
 | ![Masa vs Radio](figures/masa_vs_radio.png) | ![Masa vs Radio Log](figures/masa_vs_radio_log.png) |
 
 ### Densidad vs. Radio
-
 Muestra cómo los planetas pequeños tienden a concentrarse en regímenes de mayor densidad (rocosos), decreciendo a medida que aumenta el radio, junto con puntos que escapan de la tendencia general.
 
 | Escala Lineal | Escala Logarítmica |
@@ -83,7 +81,6 @@ Muestra cómo los planetas pequeños tienden a concentrarse en regímenes de may
 | ![Densidad vs Radio](figures/densidad_vs_radio.png) | ![Densidad vs Radio Log](figures/densidad_vs_radio_log.png) |
 
 ### Densidad vs. Periodo Orbital
-
 La escala logarítmica permite descomprimir la población cercana a la estrella anfitriona, confirmando la alta dispersión de densidades para un mismo periodo orbital.
 
 | Escala Lineal | Escala Logarítmica |
@@ -94,10 +91,11 @@ La escala logarítmica permite descomprimir la población cercana a la estrella 
 
 ## 🔍 Detección de Outliers y Verificación Física
 
-1. **Detección mediante Rango Intercuartil (IQR):**
-   Se identificaron **319 posibles outliers de densidad**, incluyendo registros extremos en el catálogo como `KOI-2513.01` ($2,000\ \text{g/cm}^3$), `Kepler-245 e` ($902\ \text{g/cm}^3$) y `Kepler-37 e` ($879\ \text{g/cm}^3$).
-2. **Contraste entre Densidad Reportada y Densidad Calculada:**
-   Un outlier estadístico no implica necesariamente un planeta físicamente extraordinario; puede originarse por alta incertidumbre observacional, estimaciones de masa mínima ($M \cdot \sin(i)$) o discrepancias al combinar parámetros de distintas publicaciones. Para auditar los datos, se contrasta la densidad reportada (`pl_dens`) contra la densidad teórica de una esfera a partir de la densidad media terrestre ($5.514\ \text{g/cm}^3$):
+### 1. Detección mediante Rango Intercuartil (IQR)
+Se identificaron **319 posibles outliers de densidad**, incluyendo registros extremos en el catálogo como `KOI-2513.01` ($2,000\ \text{g/cm}^3$), `Kepler-245 e` ($902\ \text{g/cm}^3$) y `Kepler-37 e` ($879\ \text{g/cm}^3$).
+
+### 2. Contraste entre Densidad Reportada y Densidad Calculada
+Un outlier estadístico no implica necesariamente un planeta físicamente extraordinario; puede originarse por alta incertidumbre observacional, estimaciones de masa mínima ($M \cdot \sin(i)$) o discrepancias al combinar parámetros de distintas publicaciones. Para auditar los datos, se contrasta la densidad reportada (`pl_dens`) contra la densidad teórica de una esfera a partir de la densidad media terrestre ($5.514\ \text{g/cm}^3$):
 
 $$\rho_{\text{calculada}} = 5.514 \times \frac{\text{pl\_bmasse}}{\text{pl\_rade}^3}$$
 
@@ -105,12 +103,19 @@ $$\rho_{\text{calculada}} = 5.514 \times \frac{\text{pl\_bmasse}}{\text{pl\_rade
 | :---: | :---: |
 | ![Reportada vs Calculada](figures/densidad_reportada_vs_calculada.png) | ![Reportada vs Calculada Log](figures/densidad_reportada_vs_calculada_log.png) |
 
+### 3. Filtro Multivariado y Verificación de Dominio (Domain Knowledge)
+Al aplicar filtros extremos sobre la proporción de discrepancia (Densidad Reportada > 10x o < 0.1x respecto a la calculada), se aislaron casos físicamente imposibles como **Kepler-80 f** y **Kepler-49 d**. 
+
+La revisión en la literatura astrofísica confirmó que estos valores extremos no representan anomalías físicas reales, sino **errores de medición arrastrados en el catálogo** (por ejemplo, planetas desacoplados de cadenas resonantes donde la estimación de masa por TTV no es fiable, según MacDonald et al., 2016).
+
+**Entregable final:** 
+Los outliers descartados por inconsistencia multivariada fueron exportados al archivo `planetas_anomalos.csv` para limpiar la base de datos poblacional de cara al entrenamiento de futuros modelos de Inteligencia Artificial.
+
 ---
 
 ## ⚙️ Instalación y Ejecución
 
 1. **Clonar el repositorio:**
-
    ```bash
    git clone [https://github.com/TU_USUARIO/exoplanet-explorer.git](https://github.com/TU_USUARIO/exoplanet-explorer.git)
    cd exoplanet-explorer
